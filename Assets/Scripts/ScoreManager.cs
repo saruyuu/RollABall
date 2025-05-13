@@ -22,7 +22,7 @@ public class ScoreManager : MonoBehaviour
     private float elapsedTime = 0f;
 
     // ƒQ[ƒ€‚ªI—¹‚µ‚½‚©‚Ç‚¤‚©
-    private bool isGameFinished = false;
+    public bool isGameFinished = false;
 
     void Start()
     {

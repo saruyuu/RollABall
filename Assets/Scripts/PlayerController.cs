@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,15 +9,16 @@ public class PlayerController : MonoBehaviour
     public float speed = 10f;
 
     // Rigidbodyコンポーネントへの参照
-    private Rigidbody rb;
+    private Rigidbody sphereRigidbody;
 
     // 入力された移動ベクトル
     private Vector2 moveInput = Vector2.zero;
 
+    public GameOverManager gameOverManager;
     void Start()
     {
         // Rigidbodyコンポーネントを取得
-        rb = GetComponent<Rigidbody>();
+        sphereRigidbody = GetComponent<Rigidbody>();
     }
 
     // Input Systemからの移動入力を処理するメソッド
@@ -32,6 +35,17 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(moveInput.x, 0.0f, moveInput.y);
 
         // Rigidbodyに力を加えてプレイヤーを移動
-        rb.AddForce(movement * speed);
+        sphereRigidbody.AddForce(movement * speed);
+
+        
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        //敵が接触してきたら
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            gameOverManager.GameOver();
+        }
     }
 }
